@@ -1,5 +1,6 @@
 package com.example.food_marketplace.domain.user;
 
+import com.example.food_marketplace.domain.store.Store;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,4 +22,8 @@ public class User {
     private String name;
     private String email;
     private String password;
+
+    @ManyToOne
+    @JoinColumn(name = "store_id")
+    private Store store;
 }

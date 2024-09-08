@@ -1,5 +1,6 @@
 package com.example.food_marketplace.domain.store;
 
+import com.example.food_marketplace.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,4 +20,7 @@ public class Store {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String subdomain;
+
+    @OneToOne(mappedBy = "store")
+    private User users;
 }
