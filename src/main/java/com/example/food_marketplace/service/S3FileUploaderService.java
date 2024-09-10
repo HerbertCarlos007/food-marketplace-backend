@@ -13,7 +13,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Service
-public class S3FileUploaderServiceService {
+public class S3FileUploaderService {
 
     @Value("${aws.bucket.name}")
     private String bucketName;

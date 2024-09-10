@@ -28,7 +28,7 @@ public class ProductService {
     private StoreRepository storeRepository;
 
     @Autowired
-    private S3FileUploaderServiceService s3FileUploader;
+    private S3FileUploaderService s3FileUploader;
 
     public Product createProduct(ProductRequestDTO data) {
         String imgUrl = null;
