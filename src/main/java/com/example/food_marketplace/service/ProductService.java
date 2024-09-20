@@ -48,6 +48,8 @@ public class ProductService {
         newProduct.setImageUrl(imgUrl);
         newProduct.setPrice(data.price());
         newProduct.setStore(store);
+        newProduct.setStatus(data.status());
+        newProduct.setProductType(data.productType());
 
         productRepository.save(newProduct);
         return newProduct;

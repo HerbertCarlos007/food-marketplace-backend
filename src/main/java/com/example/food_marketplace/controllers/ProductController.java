@@ -24,8 +24,10 @@ public class ProductController {
     public ResponseEntity<Product> create(@RequestParam("name") String name,
                                           @RequestParam(value = "imageUrl", required = false) MultipartFile imageUrl,
                                           @RequestParam("price") double price,
-                                          @RequestParam("storeId") UUID storeId) {
-        ProductRequestDTO productRequestDTO = new ProductRequestDTO(name, imageUrl, price, storeId);
+                                          @RequestParam("storeId") UUID storeId,
+                                          @RequestParam("status") String status,
+                                          @RequestParam("productType") String productType) {
+        ProductRequestDTO productRequestDTO = new ProductRequestDTO(name, imageUrl, price, storeId, status, productType);
         Product newProduct = this.productService.createProduct(productRequestDTO);
         return ResponseEntity.ok(newProduct);
     }
