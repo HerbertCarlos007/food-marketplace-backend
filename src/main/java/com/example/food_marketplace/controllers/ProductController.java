@@ -31,9 +31,9 @@ public class ProductController {
         return ResponseEntity.ok(newProduct);
     }
 
-    @GetMapping
-    public ResponseEntity<List<ProductResponseDTO>> getAllProducts() {
-        List<ProductResponseDTO> allProducts = productService.getProducts();
+    @GetMapping("/{storeId}")
+    public ResponseEntity<List<ProductResponseDTO>> getAllProducts(@PathVariable UUID storeId) {
+        List<ProductResponseDTO> allProducts = productService.getProducts(storeId);
         return ResponseEntity.ok(allProducts);
     }
 }

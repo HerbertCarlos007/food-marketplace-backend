@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ProductService {
@@ -57,8 +58,8 @@ public class ProductService {
         return newProduct;
     }
 
-    public List<ProductResponseDTO> getProducts() {
-       List<Product> products = productRepository.findAll();
+    public List<ProductResponseDTO> getProducts(UUID storeId) {
+        List<Product> products = productRepository.findByStoreId(storeId);
         return products.stream().map(product -> new ProductResponseDTO(
                 product.getId(),
                 product.getName(),
@@ -69,4 +70,5 @@ public class ProductService {
                 product.getProductType()
         )).toList();
     }
+
 }
