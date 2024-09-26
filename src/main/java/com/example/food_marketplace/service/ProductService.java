@@ -4,12 +4,14 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.example.food_marketplace.domain.product.Product;
 import com.example.food_marketplace.domain.store.Store;
 import com.example.food_marketplace.dto.product.ProductRequestDTO;
+import com.example.food_marketplace.dto.product.ProductResponseDTO;
 import com.example.food_marketplace.repositories.ProductRepository;
 import com.example.food_marketplace.repositories.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -53,5 +55,18 @@ public class ProductService {
 
         productRepository.save(newProduct);
         return newProduct;
+    }
+
+    public List<ProductResponseDTO> getProducts() {
+       List<Product> products = productRepository.findAll();
+        return products.stream().map(product -> new ProductResponseDTO(
+                product.getId(),
+                product.getName(),
+                product.getImageUrl(),
+                product.getPrice(),
+                product.getStore().getId(),
+                product.getStatus(),
+                product.getProductType()
+        )).toList();
     }
 }
