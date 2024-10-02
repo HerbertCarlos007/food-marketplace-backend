@@ -1,10 +1,12 @@
 package com.example.food_marketplace.service;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.example.food_marketplace.domain.category.Category;
 import com.example.food_marketplace.domain.product.Product;
 import com.example.food_marketplace.domain.store.Store;
 import com.example.food_marketplace.dto.product.ProductRequestDTO;
 import com.example.food_marketplace.dto.product.ProductResponseDTO;
+import com.example.food_marketplace.repositories.CategoryRepository;
 import com.example.food_marketplace.repositories.ProductRepository;
 import com.example.food_marketplace.repositories.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ public class ProductService {
     private StoreRepository storeRepository;
 
     @Autowired
+    private  CategoryRepository categoryRepository;
+
+    @Autowired
     private S3FileUploaderService s3FileUploader;
 
     public Product createProduct(ProductRequestDTO data) {
@@ -46,6 +51,12 @@ public class ProductService {
         }
         Store store = storeOptional.get();
 
+        Optional<Category> categoryOptional = categoryRepository.findById(data.categoryId());
+        if (storeOptional.isEmpty()) {
+            throw new IllegalArgumentException("category not found with ID: " + data.categoryId());
+        }
+        Category category = categoryOptional.get();
+
         Product newProduct = new Product();
         newProduct.setName(data.name());
         newProduct.setImageUrl(imgUrl);
@@ -53,6 +64,7 @@ public class ProductService {
         newProduct.setStore(store);
         newProduct.setStatus(data.status());
         newProduct.setProductType(data.productType());
+        newProduct.setCategory(category);
 
         productRepository.save(newProduct);
         return newProduct;
