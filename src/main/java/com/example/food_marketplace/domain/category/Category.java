@@ -22,7 +22,7 @@ public class Category {
 
     private String name;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "store_id")
     private Store store;
 }

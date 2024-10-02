@@ -20,20 +20,17 @@ public class CategoryService {
     private StoreRepository storeRepository;
 
     public Category createCategory(CategoryRequestDTO data) {
-        Optional<Category> categoryExists = categoryRepository.findByName(data.name());
-        if (categoryExists.isPresent()) {
-            return categoryExists.get();
-        }
-
         Optional<Store> storeOptional = storeRepository.findById(data.storeId());
-        if (storeOptional.isEmpty()) {
+        if (!storeOptional.isPresent()) {
             throw new IllegalArgumentException("Store not found with ID: " + data.storeId());
         }
         Store store = storeOptional.get();
 
-        Category categories = new Category();
-        categories.setName(data.name());
-        categories.setStore(store);
-        return categoryRepository.save(categories);
+        Category category = new Category();
+        category.setName(data.name());
+        category.setStore(store);
+
+        return categoryRepository.save(category);
     }
+
 }
