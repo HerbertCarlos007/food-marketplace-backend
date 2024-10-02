@@ -4,6 +4,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
-public record ProductResponseDTO(UUID id ,String name, String imageUrl, double price, UUID storeId, String status, String productType) {
+public record ProductResponseDTO(UUID id ,String name, String imageUrl, double price, UUID storeId, String status, String productType, UUID categoryId, String categoryName) {
 
 }

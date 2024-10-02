@@ -79,7 +79,9 @@ public class ProductService {
                 product.getPrice(),
                 product.getStore().getId(),
                 product.getStatus(),
-                product.getProductType()
+                product.getProductType(),
+                product.getCategory().getId(),
+                product.getCategory().getName()
         )).toList();
     }
 
