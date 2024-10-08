@@ -18,7 +18,8 @@ public class UserService {
         return users.stream().map(user -> new UserResponseDTO(
                 user.getId(),
                 user.getName(),
-                user.getEmail()
+                user.getEmail(),
+                user.getRole()
         )).toList();
     }
 }
