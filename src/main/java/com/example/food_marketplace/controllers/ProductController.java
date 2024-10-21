@@ -3,6 +3,7 @@ package com.example.food_marketplace.controllers;
 import com.example.food_marketplace.domain.product.Product;
 import com.example.food_marketplace.dto.product.ProductRequestDTO;
 import com.example.food_marketplace.dto.product.ProductResponseDTO;
+import com.example.food_marketplace.dto.product.ProductUpdateDTO;
 import com.example.food_marketplace.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,5 +37,17 @@ public class ProductController {
     public ResponseEntity<List<ProductResponseDTO>> getAllProducts(@PathVariable UUID storeId) {
         List<ProductResponseDTO> allProducts = productService.getProducts(storeId);
         return ResponseEntity.ok(allProducts);
+    }
+
+    @PutMapping(value = "/{id}", consumes = "multipart/form-data")
+    public ResponseEntity<Product> updateProduct(@PathVariable UUID id,
+                                                 @RequestParam("name") String name,
+                                                 @RequestParam("price") double price,
+                                                 @RequestParam("status") String status,
+                                                 @RequestParam("productType") String productType,
+                                                 @RequestParam("categoryId") UUID categoryId) {
+        ProductUpdateDTO productUpdateDTO = new ProductUpdateDTO(name, price, status, productType, categoryId);
+        Product product = productService.updateProduct(id, productUpdateDTO);
+        return ResponseEntity.ok(product);
     }
 }

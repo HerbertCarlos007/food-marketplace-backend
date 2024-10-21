@@ -30,7 +30,6 @@ public class StoreService {
     public Store getBySubdomain(String subdomain) {
         Store store = storeRepository.findBySubdomain(subdomain)
                 .orElseThrow(() -> new RuntimeException("Store not found"));
-        System.out.println("Store found: " + store.getSubdomain());
         return store;
     }
 }

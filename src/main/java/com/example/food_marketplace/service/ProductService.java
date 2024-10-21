@@ -6,11 +6,13 @@ import com.example.food_marketplace.domain.product.Product;
 import com.example.food_marketplace.domain.store.Store;
 import com.example.food_marketplace.dto.product.ProductRequestDTO;
 import com.example.food_marketplace.dto.product.ProductResponseDTO;
+import com.example.food_marketplace.dto.product.ProductUpdateDTO;
 import com.example.food_marketplace.repositories.CategoryRepository;
 import com.example.food_marketplace.repositories.ProductRepository;
 import com.example.food_marketplace.repositories.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,7 +54,7 @@ public class ProductService {
         Store store = storeOptional.get();
 
         Optional<Category> categoryOptional = categoryRepository.findById(data.categoryId());
-        if (storeOptional.isEmpty()) {
+        if (categoryOptional.isEmpty()) {
             throw new IllegalArgumentException("category not found with ID: " + data.categoryId());
         }
         Category category = categoryOptional.get();
@@ -83,6 +85,31 @@ public class ProductService {
                 product.getCategory().getId(),
                 product.getCategory().getName()
         )).toList();
+    }
+
+    public Product updateProduct(UUID id , ProductUpdateDTO data) {
+
+        Optional<Product> product = productRepository.findById(id);
+
+        Optional<Category> categoryOptional = categoryRepository.findById(data.categoryId());
+        if (categoryOptional.isEmpty()) {
+            throw new IllegalArgumentException("category not found with ID: " + data.categoryId());
+        }
+        Category category = categoryOptional.get();
+
+        if (product.isPresent()) {
+            Product productAlreadyExists = product.get();
+
+            productAlreadyExists.setName(data.name());
+            productAlreadyExists.setPrice(data.price());
+            productAlreadyExists.setStatus(data.status());
+            productAlreadyExists.setProductType(data.productType());
+            productAlreadyExists.setCategory(category);
+
+            return productRepository.save(productAlreadyExists);
+        } else {
+            throw new RuntimeException("Produto não encontrado com o ID: " + id);
+        }
     }
 
 }
