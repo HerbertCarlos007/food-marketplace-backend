@@ -67,6 +67,7 @@ public class ProductService {
         newProduct.setStatus(data.status());
         newProduct.setProductType(data.productType());
         newProduct.setCategory(category);
+        newProduct.setAccompaniments(data.accompaniments());
 
         productRepository.save(newProduct);
         return newProduct;
@@ -83,7 +84,8 @@ public class ProductService {
                 product.getStatus(),
                 product.getProductType(),
                 product.getCategory().getId(),
-                product.getCategory().getName()
+                product.getCategory().getName(),
+                product.getAccompaniments()
         )).toList();
     }
 
@@ -105,6 +107,7 @@ public class ProductService {
             productAlreadyExists.setStatus(data.status());
             productAlreadyExists.setProductType(data.productType());
             productAlreadyExists.setCategory(category);
+            productAlreadyExists.setAccompaniments(data.accompaniments());
 
             return productRepository.save(productAlreadyExists);
         } else {

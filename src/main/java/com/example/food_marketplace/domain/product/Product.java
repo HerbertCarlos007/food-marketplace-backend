@@ -27,6 +27,7 @@ public class Product {
     private double price;
     private String status;
     private String productType;
+    private String accompaniments;
 
     @ManyToOne
     @JoinColumn(name = "store_id")

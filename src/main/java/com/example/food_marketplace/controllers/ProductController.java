@@ -27,11 +27,16 @@ public class ProductController {
                                           @RequestParam("storeId") UUID storeId,
                                           @RequestParam("status") String status,
                                           @RequestParam("productType") String productType,
-                                          @RequestParam("categoryId") UUID categoryId) {
-        ProductRequestDTO productRequestDTO = new ProductRequestDTO(name, imageUrl, price, storeId, status, productType, categoryId);
+                                          @RequestParam("categoryId") UUID categoryId,
+                                          @RequestParam("accompaniments") String accompaniments){
+        ProductRequestDTO productRequestDTO = new ProductRequestDTO(name, imageUrl, price, storeId, status, productType, categoryId, accompaniments);
         Product newProduct = this.productService.createProduct(productRequestDTO);
         return ResponseEntity.ok(newProduct);
     }
+
+
+
+
 
     @GetMapping("/{storeId}")
     public ResponseEntity<List<ProductResponseDTO>> getAllProducts(@PathVariable UUID storeId) {
@@ -45,8 +50,9 @@ public class ProductController {
                                                  @RequestParam("price") double price,
                                                  @RequestParam("status") String status,
                                                  @RequestParam("productType") String productType,
-                                                 @RequestParam("categoryId") UUID categoryId) {
-        ProductUpdateDTO productUpdateDTO = new ProductUpdateDTO(name, price, status, productType, categoryId);
+                                                 @RequestParam("categoryId") UUID categoryId,
+                                                 @RequestParam("accompaniments") String accompaniments) {
+        ProductUpdateDTO productUpdateDTO = new ProductUpdateDTO(name, price, status, productType, categoryId, accompaniments);
         Product product = productService.updateProduct(id, productUpdateDTO);
         return ResponseEntity.ok(product);
     }
