@@ -22,5 +22,6 @@ public class Cart {
 
     private UUID productId;
     private UUID storeId;
+    private Integer quantity;
 
 }
