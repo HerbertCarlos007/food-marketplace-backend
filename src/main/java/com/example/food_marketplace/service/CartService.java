@@ -1,11 +1,13 @@
 package com.example.food_marketplace.service;
 
 import com.example.food_marketplace.domain.cart.Cart;
-import com.example.food_marketplace.dto.CartRequestDTO;
+import com.example.food_marketplace.dto.cart.CartRequestDTO;
+import com.example.food_marketplace.dto.cart.ProductsOnCartRequestDTO;
 import com.example.food_marketplace.repositories.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
