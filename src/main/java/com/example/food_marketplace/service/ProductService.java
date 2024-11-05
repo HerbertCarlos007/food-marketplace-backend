@@ -115,4 +115,12 @@ public class ProductService {
         }
     }
 
+    public void deleteProduct(UUID id) {
+        Optional<Product> product = productRepository.findById(id);
+        if (product.isEmpty()) {
+            throw new IllegalArgumentException("Prodcut not found");
+        }
+        productRepository.deleteById(id);
+    }
+
 }
