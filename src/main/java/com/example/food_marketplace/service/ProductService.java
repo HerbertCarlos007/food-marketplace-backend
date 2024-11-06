@@ -10,6 +10,7 @@ import com.example.food_marketplace.dto.product.ProductUpdateDTO;
 import com.example.food_marketplace.repositories.CategoryRepository;
 import com.example.food_marketplace.repositories.ProductRepository;
 import com.example.food_marketplace.repositories.StoreRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -115,12 +116,17 @@ public class ProductService {
         }
     }
 
-    public void deleteProduct(UUID id) {
+    @Transactional
+    public void deleteProduct(UUID id, UUID storeId) {
         Optional<Product> product = productRepository.findById(id);
         if (product.isEmpty()) {
             throw new IllegalArgumentException("Prodcut not found");
         }
-        productRepository.deleteById(id);
+        Optional<Store> storeOptional = storeRepository.findById(storeId);
+        if (storeOptional.isEmpty()) {
+            throw new IllegalArgumentException("Store not found");
+        }
+        productRepository.deleteByIdAndStoreId(id, storeId);
     }
 
 }
