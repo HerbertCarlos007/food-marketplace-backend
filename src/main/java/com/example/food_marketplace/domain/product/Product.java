@@ -1,5 +1,6 @@
 package com.example.food_marketplace.domain.product;
 
+import com.example.food_marketplace.domain.cartProduct.CartProduct;
 import com.example.food_marketplace.domain.category.Category;
 import com.example.food_marketplace.domain.store.Store;
 import jakarta.persistence.*;
@@ -8,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Table(name = "products")
@@ -36,4 +38,11 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartProduct> cartProducts;
+
+    public Product(UUID id) {
+        this.id = id;
+    }
 }
