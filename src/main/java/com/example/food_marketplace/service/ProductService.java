@@ -13,7 +13,6 @@ import com.example.food_marketplace.repositories.StoreRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -65,7 +64,7 @@ public class ProductService {
         newProduct.setImageUrl(imgUrl);
         newProduct.setPrice(data.price());
         newProduct.setStore(store);
-        newProduct.setStatus(data.status());
+        newProduct.setInStock(data.inStock());
         newProduct.setProductType(data.productType());
         newProduct.setCategory(category);
         newProduct.setAccompaniments(data.accompaniments());
@@ -82,7 +81,7 @@ public class ProductService {
                 product.getImageUrl(),
                 product.getPrice(),
                 product.getStore().getId(),
-                product.getStatus(),
+                product.getInStock(),
                 product.getProductType(),
                 product.getCategory().getId(),
                 product.getCategory().getName(),
@@ -105,7 +104,7 @@ public class ProductService {
 
             productAlreadyExists.setName(data.name());
             productAlreadyExists.setPrice(data.price());
-            productAlreadyExists.setStatus(data.status());
+            productAlreadyExists.setInStock(data.inStock());
             productAlreadyExists.setProductType(data.productType());
             productAlreadyExists.setCategory(category);
             productAlreadyExists.setAccompaniments(data.accompaniments());

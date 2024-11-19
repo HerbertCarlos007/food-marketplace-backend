@@ -1,6 +1,5 @@
 package com.example.food_marketplace.domain.product;
 
-import com.example.food_marketplace.domain.cartProduct.CartProduct;
 import com.example.food_marketplace.domain.category.Category;
 import com.example.food_marketplace.domain.store.Store;
 import jakarta.persistence.*;
@@ -27,7 +26,7 @@ public class Product {
     private String name;
     private String imageUrl;
     private double price;
-    private String status;
+    private String inStock;
     private String productType;
     private String accompaniments;
 
@@ -39,10 +38,4 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CartProduct> cartProducts;
-
-    public Product(UUID id) {
-        this.id = id;
-    }
 }

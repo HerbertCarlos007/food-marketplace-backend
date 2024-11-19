@@ -4,5 +4,5 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.UUID;
 
-public record ProductRequestDTO (String name, MultipartFile imageUrl, double price, UUID storeId, String status, String productType, UUID categoryId, String accompaniments){
+public record ProductRequestDTO (String name, MultipartFile imageUrl, double price, UUID storeId, String inStock, String productType, UUID categoryId, String accompaniments){
 }
