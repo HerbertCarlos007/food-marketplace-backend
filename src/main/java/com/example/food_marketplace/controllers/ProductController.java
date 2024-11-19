@@ -25,18 +25,14 @@ public class ProductController {
                                           @RequestParam(value = "imageUrl", required = false) MultipartFile imageUrl,
                                           @RequestParam("price") double price,
                                           @RequestParam("storeId") UUID storeId,
-                                          @RequestParam("status") String status,
+                                          @RequestParam("inStock") String inStock,
                                           @RequestParam("productType") String productType,
                                           @RequestParam("categoryId") UUID categoryId,
                                           @RequestParam("accompaniments") String accompaniments){
-        ProductRequestDTO productRequestDTO = new ProductRequestDTO(name, imageUrl, price, storeId, status, productType, categoryId, accompaniments);
+        ProductRequestDTO productRequestDTO = new ProductRequestDTO(name, imageUrl, price, storeId, inStock, productType, categoryId, accompaniments);
         Product newProduct = this.productService.createProduct(productRequestDTO);
         return ResponseEntity.ok(newProduct);
     }
-
-
-
-
 
     @GetMapping("/{storeId}")
     public ResponseEntity<List<ProductResponseDTO>> getAllProducts(@PathVariable UUID storeId) {
@@ -48,11 +44,11 @@ public class ProductController {
     public ResponseEntity<Product> updateProduct(@PathVariable UUID id,
                                                  @RequestParam("name") String name,
                                                  @RequestParam("price") double price,
-                                                 @RequestParam("status") String status,
+                                                 @RequestParam("inStock") String inStock,
                                                  @RequestParam("productType") String productType,
                                                  @RequestParam("categoryId") UUID categoryId,
                                                  @RequestParam("accompaniments") String accompaniments) {
-        ProductUpdateDTO productUpdateDTO = new ProductUpdateDTO(name, price, status, productType, categoryId, accompaniments);
+        ProductUpdateDTO productUpdateDTO = new ProductUpdateDTO(name, price, inStock, productType, categoryId, accompaniments);
         Product product = productService.updateProduct(id, productUpdateDTO);
         return ResponseEntity.ok(product);
     }
