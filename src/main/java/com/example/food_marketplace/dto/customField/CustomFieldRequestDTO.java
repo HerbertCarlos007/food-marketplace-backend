@@ -1,4 +1,6 @@
 package com.example.food_marketplace.dto.customField;
 
-public record CustomFieldRequestDTO(String name, String primary_color, String secondary_color, String logoUrl, String font_name) {
+import org.springframework.web.multipart.MultipartFile;
+
+public record CustomFieldRequestDTO(String name, String primary_color, String secondary_color, MultipartFile logoUrl, String font_name) {
 }
