@@ -1,9 +1,7 @@
 package com.example.food_marketplace.domain.customField;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.example.food_marketplace.domain.store.Store;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,4 +26,8 @@ public class CustomField {
     private String secondary_color;
     private String logoUrl;
     private String font_name;
+
+    @ManyToOne
+    @JoinColumn(name = "store_id")
+    private Store store;
 }
