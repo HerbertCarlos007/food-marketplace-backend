@@ -9,4 +9,6 @@ import java.util.UUID;
 public interface CustomFieldRepository extends JpaRepository<CustomField, UUID> {
 
     List<CustomField> findByStoreId(UUID storeId);
+
+    void deleteByIdAndStoreId(UUID id, UUID storeId);
 }

@@ -119,7 +119,7 @@ public class ProductService {
     public void deleteProduct(UUID id, UUID storeId) {
         Optional<Product> product = productRepository.findById(id);
         if (product.isEmpty()) {
-            throw new IllegalArgumentException("Prodcut not found");
+            throw new IllegalArgumentException("Product not found");
         }
         Optional<Store> storeOptional = storeRepository.findById(storeId);
         if (storeOptional.isEmpty()) {

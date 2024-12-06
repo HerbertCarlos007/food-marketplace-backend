@@ -49,4 +49,10 @@ public class CustomFieldController {
         CustomField customField = customFieldService.updateCustomField(id, customFieldUpdateDTO);
         return ResponseEntity.ok(customField);
     }
+
+    @DeleteMapping("/{id}/{storeId}")
+    public ResponseEntity<Void> deleteCustomField(@PathVariable UUID id, @PathVariable UUID storeId) {
+        customFieldService.deleteCustomField(id, storeId);
+        return ResponseEntity.noContent().build();
+    }
 }

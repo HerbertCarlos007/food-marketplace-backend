@@ -7,6 +7,7 @@ import com.example.food_marketplace.dto.customField.CustomFieldResponseDTO;
 import com.example.food_marketplace.dto.customField.CustomFieldUpdateDTO;
 import com.example.food_marketplace.repositories.CustomFieldRepository;
 import com.example.food_marketplace.repositories.StoreRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -87,5 +88,18 @@ public class CustomFieldService {
         }else {
             throw new RuntimeException("Custom field não encontrado");
         }
+    }
+
+    @Transactional
+    public void deleteCustomField(UUID id, UUID storeId) {
+        Optional<CustomField> customField = customFieldRepository.findById(id);
+        if (customField.isEmpty()) {
+            throw new IllegalArgumentException("Custom field not found");
+        }
+        Optional<Store> storeOptional = storeRepository.findById(storeId);
+        if (storeOptional.isEmpty()) {
+            throw new IllegalArgumentException("Store not found");
+        }
+        customFieldRepository.deleteByIdAndStoreId(id, storeId);
     }
 }
