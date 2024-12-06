@@ -3,12 +3,15 @@ package com.example.food_marketplace.service;
 import com.example.food_marketplace.domain.customField.CustomField;
 import com.example.food_marketplace.domain.store.Store;
 import com.example.food_marketplace.dto.customField.CustomFieldRequestDTO;
+import com.example.food_marketplace.dto.customField.CustomFieldResponseDTO;
 import com.example.food_marketplace.repositories.CustomFieldRepository;
 import com.example.food_marketplace.repositories.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CustomFieldService {
@@ -45,5 +48,17 @@ public class CustomFieldService {
 
         customFieldRepository.save(newCustomField);
         return newCustomField;
+    }
+
+    public List<CustomFieldResponseDTO> getCustomFields(UUID storeId) {
+        List<CustomField> customFields = customFieldRepository.findByStoreId(storeId);
+        return customFields.stream().map(customField -> new CustomFieldResponseDTO(
+                customField.getName(),
+                customField.getPrimary_color(),
+                customField.getSecondary_color(),
+                customField.getLogoUrl(),
+                customField.getFont_name(),
+                customField.getStore().getId()
+        )).toList();
     }
 }

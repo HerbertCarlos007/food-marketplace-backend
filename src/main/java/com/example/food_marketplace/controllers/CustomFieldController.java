@@ -2,15 +2,14 @@ package com.example.food_marketplace.controllers;
 
 import com.example.food_marketplace.domain.customField.CustomField;
 import com.example.food_marketplace.dto.customField.CustomFieldRequestDTO;
+import com.example.food_marketplace.dto.customField.CustomFieldResponseDTO;
 import com.example.food_marketplace.service.CustomFieldService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -30,5 +29,11 @@ public class CustomFieldController {
         CustomFieldRequestDTO customFieldRequestDTO = new CustomFieldRequestDTO(name, primary_color, secondary_color, logoUrl, font_name, storeId);
         CustomField newCustomField = this.customFieldService.createCustomField(customFieldRequestDTO);
         return ResponseEntity.ok(newCustomField);
+    }
+
+    @GetMapping("/{storeId}")
+    public ResponseEntity<List<CustomFieldResponseDTO>> getCustomFields(@PathVariable UUID storeId) {
+        List<CustomFieldResponseDTO> customFields = customFieldService.getCustomFields(storeId);
+        return ResponseEntity.ok(customFields);
     }
 }
