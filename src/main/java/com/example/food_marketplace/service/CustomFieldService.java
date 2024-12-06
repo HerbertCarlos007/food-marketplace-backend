@@ -4,6 +4,7 @@ import com.example.food_marketplace.domain.customField.CustomField;
 import com.example.food_marketplace.domain.store.Store;
 import com.example.food_marketplace.dto.customField.CustomFieldRequestDTO;
 import com.example.food_marketplace.dto.customField.CustomFieldResponseDTO;
+import com.example.food_marketplace.dto.customField.CustomFieldUpdateDTO;
 import com.example.food_marketplace.repositories.CustomFieldRepository;
 import com.example.food_marketplace.repositories.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,7 @@ public class CustomFieldService {
     public List<CustomFieldResponseDTO> getCustomFields(UUID storeId) {
         List<CustomField> customFields = customFieldRepository.findByStoreId(storeId);
         return customFields.stream().map(customField -> new CustomFieldResponseDTO(
+                customField.getId(),
                 customField.getName(),
                 customField.getPrimary_color(),
                 customField.getSecondary_color(),
@@ -60,5 +62,30 @@ public class CustomFieldService {
                 customField.getFont_name(),
                 customField.getStore().getId()
         )).toList();
+    }
+
+    public CustomField updateCustomField(UUID id, CustomFieldUpdateDTO data) {
+
+        String logoUrl = null;
+
+        if (data.logoUrl() != null) {
+            logoUrl = this.s3FileUploader.uploadImg(data.logoUrl());
+        }
+
+        Optional<CustomField> customField = customFieldRepository.findById(id);
+
+        if (customField.isPresent()) {
+            CustomField customFieldAlreadyExists = customField.get();
+
+            customFieldAlreadyExists.setName(data.name());
+            customFieldAlreadyExists.setPrimary_color(data.primary_color());
+            customFieldAlreadyExists.setSecondary_color(data.secondary_color());
+            customFieldAlreadyExists.setLogoUrl(logoUrl);
+            customFieldAlreadyExists.setFont_name(data.font_name());
+
+            return customFieldRepository.save(customFieldAlreadyExists);
+        }else {
+            throw new RuntimeException("Custom field não encontrado");
+        }
     }
 }
