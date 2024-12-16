@@ -24,8 +24,8 @@ public class Store {
     private UUID id;
     private String subdomain;
 
-    @OneToOne(mappedBy = "store")
-    private User users;
+    @OneToMany(mappedBy = "store")
+    private List<User> users;
 
     @OneToMany(mappedBy = "store")
     private List<Product> products;
