@@ -17,8 +17,9 @@ import java.util.UUID;
 @NoArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue
     private UUID id;
+
     private String name;
     private String email;
     private String password;
