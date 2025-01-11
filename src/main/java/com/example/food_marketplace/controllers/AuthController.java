@@ -1,8 +1,4 @@
 package com.example.food_marketplace.controllers;
-
-import com.example.food_marketplace.domain.category.Category;
-import com.example.food_marketplace.domain.store.Store;
-import com.example.food_marketplace.domain.user.User;
 import com.example.food_marketplace.dto.user.LoginRequestDTO;
 import com.example.food_marketplace.dto.user.RegisterRequestDTO;
 import com.example.food_marketplace.dto.user.ResponseDTO;
@@ -15,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController

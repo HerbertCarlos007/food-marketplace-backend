@@ -3,7 +3,6 @@ package com.example.food_marketplace.infra;
 import com.example.food_marketplace.domain.user.User;
 import com.example.food_marketplace.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
