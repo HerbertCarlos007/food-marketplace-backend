@@ -45,21 +45,7 @@ public class AuthController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<?> update(@PathVariable UUID id, @RequestBody UpdateUserDTO body) {
-        Optional<User> userOptional = userRepository.findById(id);
-        if (userOptional.isEmpty()) {
-            return ResponseEntity.badRequest().body("Usuário não encontrado!");
-        }
-
-        User user = userOptional.get();
-        user.setEmail(body.email());
-        user.setRole(body.role());
-        user.setName(body.name());
-        user.setStatus(body.status());
-
-        this.userRepository.save(user);
-
-        String newToken = this.tokenService.generateToken(user);
-        return ResponseEntity.ok(new ResponseDTO(user.getName(), newToken, user.getRole(), user.getStatus()));
+        return userService.update(id, body);
     }
 
 }
