@@ -40,29 +40,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequestDTO body) {
-        Optional<User> userExists = this.userRepository.findByEmail(body.email());
-        if (userExists.isPresent()) {
-            return ResponseEntity.badRequest().body("Usuário já existe");
-        }
-
-        Optional<Store> storeOptional = this.storeRepository.findById(body.storeId());
-        if (storeOptional.isEmpty()) {
-            return ResponseEntity.badRequest().body("Loja não encontrada");
-        }
-        Store store = storeOptional.get();
-
-        User newUser = new User();
-        newUser.setPassword(passwordEncoder.encode(body.password()));
-        newUser.setEmail(body.email());
-        newUser.setName(body.name());
-        newUser.setStore(store);
-        newUser.setRole(body.role());
-        newUser.setStatus(body.status());
-
-        this.userRepository.save(newUser);
-
-        String token = this.tokenService.generateToken(newUser);
-        return ResponseEntity.ok(new ResponseDTO(newUser.getName(), token, newUser.getRole(), newUser.getStatus()));
+        return userService.register(body);
     }
 
     @PutMapping("/update/{id}")
