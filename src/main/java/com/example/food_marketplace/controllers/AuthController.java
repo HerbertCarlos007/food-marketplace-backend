@@ -5,18 +5,17 @@ import com.example.food_marketplace.domain.user.User;
 import com.example.food_marketplace.dto.user.LoginRequestDTO;
 import com.example.food_marketplace.dto.user.RegisterRequestDTO;
 import com.example.food_marketplace.dto.user.ResponseDTO;
+import com.example.food_marketplace.dto.user.UpdateUserDTO;
 import com.example.food_marketplace.infra.TokenService;
 import com.example.food_marketplace.repositories.StoreRepository;
 import com.example.food_marketplace.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/auth")
@@ -66,4 +65,24 @@ public class AuthController {
         String token = this.tokenService.generateToken(newUser);
         return ResponseEntity.ok(new ResponseDTO(newUser.getName(), token, newUser.getRole(), newUser.getStatus()));
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> update(@PathVariable UUID id, @RequestBody UpdateUserDTO body) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.badRequest().body("Usuário não encontrado!");
+        }
+
+        User user = userOptional.get();
+        user.setEmail(body.email());
+        user.setRole(body.role());
+        user.setName(body.name());
+        user.setStatus(body.status());
+
+        this.userRepository.save(user);
+
+        String newToken = this.tokenService.generateToken(user);
+        return ResponseEntity.ok(new ResponseDTO(user.getName(), newToken, user.getRole(), user.getStatus()));
+    }
+
 }
