@@ -1,5 +1,6 @@
 package com.example.food_marketplace.controllers;
 
+import com.example.food_marketplace.domain.category.Category;
 import com.example.food_marketplace.domain.store.Store;
 import com.example.food_marketplace.domain.user.User;
 import com.example.food_marketplace.dto.user.LoginRequestDTO;
@@ -9,6 +10,7 @@ import com.example.food_marketplace.dto.user.UpdateUserDTO;
 import com.example.food_marketplace.infra.TokenService;
 import com.example.food_marketplace.repositories.StoreRepository;
 import com.example.food_marketplace.repositories.UserRepository;
+import com.example.food_marketplace.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.http.ResponseEntity;
@@ -28,15 +30,12 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private TokenService tokenService;
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginRequestDTO body) {
-        User user = this.userRepository.findByEmail(body.email()).orElseThrow(() -> new RuntimeException("User not found"));
-        if (passwordEncoder.matches(body.password(), user.getPassword())) {
-            String token = this.tokenService.generateToken(user);
-            return ResponseEntity.ok(new ResponseDTO(user.getName(), token, user.getRole(), user.getStatus()));
-        }
-        return ResponseEntity.badRequest().build();
+    public ResponseEntity<ResponseDTO> login(@RequestBody LoginRequestDTO body) {
+        return userService.login(body);
     }
 
     @PostMapping("/register")
