@@ -13,7 +13,16 @@ public class StoreService {
     @Autowired
     private StoreRepository storeRepository;
 
+    @Autowired
+    private S3FileUploaderService s3FileUploader;
+
     public Store createStore(StoreRequestDTO data) {
+        String imgUrl = null;
+
+        if(data.imageUrl() != null) {
+            imgUrl = this.s3FileUploader.uploadImg(data.imageUrl());
+        }
+
         Optional<Store> storeExists = storeRepository.findBySubdomain(data.subdomain());
         if (storeExists.isPresent()) {
             return storeExists.get();
@@ -21,6 +30,8 @@ public class StoreService {
 
         Store stores = new Store();
         stores.setSubdomain(data.subdomain());
+        stores.setName(data.name());
+        stores.setImageUrl(imgUrl);
         return storeRepository.save(stores);
     }
 

@@ -7,6 +7,7 @@ import com.example.food_marketplace.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/store")
@@ -15,10 +16,13 @@ public class StoreController {
     @Autowired
     private StoreService storeService;
 
-    @PostMapping
-    public ResponseEntity<Store> createStore(@RequestBody StoreRequestDTO data) {
-        Store stores = storeService.createStore(data);
-        return ResponseEntity.ok(stores);
+    @PostMapping(consumes = "multipart/form-data")
+    public ResponseEntity<Store> createStore(@RequestParam("subdomain") String subdomain,
+                                             @RequestParam("name") String name,
+                                             @RequestParam(value = "imageUrl", required = false)MultipartFile imageUrl) {
+        StoreRequestDTO storeRequestDTO = new StoreRequestDTO(subdomain, name, imageUrl);
+        Store store = this.storeService.createStore(storeRequestDTO);
+        return ResponseEntity.ok(store);
     }
 
     @GetMapping("/{subdomain}")
