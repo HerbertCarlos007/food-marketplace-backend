@@ -1,10 +1,13 @@
 package com.example.food_marketplace.service;
 
 import com.example.food_marketplace.domain.store.Store;
+import com.example.food_marketplace.dto.store.StoreListResponseDTO;
 import com.example.food_marketplace.dto.store.StoreRequestDTO;
 import com.example.food_marketplace.repositories.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,6 +36,16 @@ public class StoreService {
         stores.setName(data.name());
         stores.setImageUrl(imgUrl);
         return storeRepository.save(stores);
+    }
+
+    public List<StoreListResponseDTO> getAllStores() {
+        List<Store> stores = storeRepository.findAll();
+        return stores.stream().map(store -> new StoreListResponseDTO(
+                store.getId(),
+                store.getName(),
+                store.getImageUrl(),
+                store.getSubdomain()
+        )).toList();
     }
 
     public Store getBySubdomain(String subdomain) {

@@ -41,6 +41,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/store").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/store/{subdomain}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/store").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/customField/{storeId}").permitAll()
                         .anyRequest().authenticated()
                 )
