@@ -22,6 +22,8 @@ public class Store {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+    private  String name;
+    private String imageUrl;
     private String subdomain;
 
     @OneToMany(mappedBy = "store")
