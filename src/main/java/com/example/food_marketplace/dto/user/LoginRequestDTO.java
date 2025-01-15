@@ -1,4 +1,6 @@
 package com.example.food_marketplace.dto.user;
 
-public record LoginRequestDTO (String email, String password){
+import java.util.UUID;
+
+public record LoginRequestDTO (String email, String password, UUID storeId){
 }
