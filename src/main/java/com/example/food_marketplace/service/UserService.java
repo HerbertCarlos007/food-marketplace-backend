@@ -48,7 +48,7 @@ public class UserService {
         if (!user.getStore().getId().equals(body.storeId())) {
             throw new RuntimeException("Usuário não pertence à loja informada");
         }
-
+        
         if (passwordEncoder.matches(body.password(), user.getPassword())) {
             String token = this.tokenService.generateToken(user);
             ResponseDTO response = new ResponseDTO(user.getName(), token, user.getRole(), user.getStatus());
