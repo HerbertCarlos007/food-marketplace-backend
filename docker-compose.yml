@@ -1,22 +1,19 @@
-version: '3.8'
+version: "3.7"
 
 services:
   db:
-    image: postgres:latest
+    image: postgres
     container_name: postgres_db
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: 123
-      POSTGRES_DB: database
+    restart: always
     ports:
-      - "5432:5432"
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_DB=database
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - postgres_network
+      - pgdata:/var/lib/postgresql/data
 
 volumes:
-  postgres_data:
-
-networks:
-  postgres_network:
+  pgdata:
+    driver: local
