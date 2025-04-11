@@ -43,6 +43,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/store/{subdomain}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/store").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/customField/{storeId}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/product/{storeId}").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
